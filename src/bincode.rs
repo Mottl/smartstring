@@ -4,8 +4,8 @@
 
 //! Support for Bincode integration. Enable this with the `bincode` feature.
 
-use crate::{Compact, LazyCompact, SmartString, SmartStringMode, MAX_INLINE};
-use std::ops::Deref;
+use crate::{Compact, LazyCompact, SmartString, SmartStringMode};
+use std::borrow::Cow;
 
 use bincode::{
     de::Decoder,
@@ -16,21 +16,15 @@ use bincode::{
 
 impl<T: SmartStringMode> Encode for SmartString<T> {
     fn encode<E: Encoder>(&self, encoder: &mut E) -> Result<(), EncodeError> {
-        self.as_bytes().encode(encoder)
+        self.as_str().encode(encoder)
     }
 }
 
-impl<T: SmartStringMode> Decode for SmartString<T> {
-    fn decode<D: Decoder>(decoder: &mut D) -> Result<Self, DecodeError> {
-        let bytes = <Vec<u8> as Decode>::decode(decoder)?;
-        let string = String::from_utf8(bytes).map_err(|e| DecodeError::Utf8 {
-            inner: e.utf8_error(),
-        })?;
-        Ok(if string.len() > MAX_INLINE {
-            Self::from_boxed(string.into())
-        } else {
-            Self::from_inline(string.deref().into())
-        })
+impl<T: SmartStringMode, Context> Decode<Context> for SmartString<T> {
+    fn decode<D: Decoder<Context = Context>>(decoder: &mut D) -> Result<Self, DecodeError> {
+        // Decode as a Cow to borrow from the decoder's buffer
+        let s = <Cow<'_, str> as Decode<Context>>::decode(decoder)?;
+        Ok(Self::from(s.as_ref()))
     }
 }
 

@@ -11,7 +11,6 @@ readme = "./README.md"
 categories = ["data-structures"]
 keywords = ["cache-local", "cpu-cache", "small-string", "sso", "inline-string"]
 exclude = ["release.toml", "proptest-regressions/**"]
-rust-version = "1.57"
 build = "./build.rs"
 
 [package.metadata.docs.rs]
@@ -35,11 +34,11 @@ static_assertions = "1"
 serde = { version = "1", optional = true }
 arbitrary = { version = "1", optional = true }
 proptest = { version = "1", optional = true }
-bincode = { version = "2.0.0-rc.3", features=["alloc"], optional = true }
+bincode = { version = "2.0.1", features=["alloc"], optional = true }
 
 [dev-dependencies]
 proptest = "1"
-proptest-derive = "0.3"
+proptest-derive = "0.5"
 criterion = "0.3"
 rand = "0.8"
 serde_test = "1"
