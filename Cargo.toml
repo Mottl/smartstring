@@ -1,6 +1,6 @@
 [package]
 name = "smartstring"
-version = "1.0.1"
+version = "1.1.0"
 authors = ["Bodil Stokke <bodil@bodil.org>"]
 edition = "2021"
 license = "MPL-2.0+"
@@ -11,11 +11,10 @@ readme = "./README.md"
 categories = ["data-structures"]
 keywords = ["cache-local", "cpu-cache", "small-string", "sso", "inline-string"]
 exclude = ["release.toml", "proptest-regressions/**"]
-rust-version = "1.57"
 build = "./build.rs"
 
 [package.metadata.docs.rs]
-features = ["arbitrary", "proptest", "serde"]
+features = ["arbitrary", "proptest", "serde", "bincode"]
 
 [badges]
 travis-ci = { repository = "bodil/smartstring", branch = "master" }
@@ -28,18 +27,20 @@ harness = false
 default = ["std"]
 std = []
 test = ["std", "arbitrary", "arbitrary/derive"]
-# json_steroids = ["dep:json-steroids"]
+json_steroids = ["dep:json-steroids"]
+bincode = ["dep:bincode"]
 
 [dependencies]
 static_assertions = "1"
 serde = { version = "1", optional = true }
 json-steroids = { git = "https://github.com/Mottl/json-steroids.git", optional = true }
+bincode = { version = "2.0.1", features=["alloc"], optional = true }
 arbitrary = { version = "1", optional = true }
 proptest = { version = "1", optional = true }
 
 [dev-dependencies]
 proptest = "1"
-proptest-derive = "0.3"
+proptest-derive = "0.5"
 criterion = "0.3"
 rand = "0.8"
 serde_test = "1"

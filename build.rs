@@ -5,6 +5,9 @@
 use version_check as rustc;
 
 fn main() {
+    println!("cargo:rustc-check-cfg=cfg(has_allocator)");
+    println!("cargo:rustc-check-cfg=cfg(needs_allocator_feature)");
+
     let ac = autocfg::new();
     let has_feature = Some(true) == rustc::supports_feature("allocator_api");
     let has_api = ac.probe_trait("alloc::alloc::Allocator");
