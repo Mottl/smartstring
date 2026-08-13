@@ -27,7 +27,7 @@ harness = false
 default = ["std"]
 std = []
 test = ["std", "arbitrary", "arbitrary/derive"]
-json_steroids = ["dep:json-steroids"]
+json-steroids = ["dep:json-steroids"]
 bincode = ["dep:bincode"]
 
 [dependencies]
