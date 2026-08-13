@@ -153,6 +153,9 @@ use ops::{string_op_grow, string_op_shrink};
 #[cfg(feature = "serde")]
 mod serde;
 
+#[cfg(feature = "json-steroids")]
+mod json_steroids;
+
 #[cfg(feature = "arbitrary")]
 mod arbitrary;
 

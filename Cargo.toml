@@ -28,10 +28,12 @@ harness = false
 default = ["std"]
 std = []
 test = ["std", "arbitrary", "arbitrary/derive"]
+# json_steroids = ["dep:json-steroids"]
 
 [dependencies]
 static_assertions = "1"
 serde = { version = "1", optional = true }
+json-steroids = { git = "https://github.com/Mottl/json-steroids.git", optional = true }
 arbitrary = { version = "1", optional = true }
 proptest = { version = "1", optional = true }
 
